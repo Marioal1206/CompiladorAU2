@@ -152,7 +152,7 @@ namespace Compilador
                                     miSimbolo.strValor = arregloPalabrasLinea[j + 2];
                                 switch (listaDefiniciones[j + 2])
                                 {
-                                    case "CAD":
+                                    case "CAD": 
                                         miSimbolo.strTipoValor = "string";
                                         break;
                                     case "CNUM":

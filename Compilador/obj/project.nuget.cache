@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "EKwzfKIDcwmNtvemMEdv1oFD2UTMweB/R46m6Wy2EPnNGLvBRyJNJCoYZBdXoLqtvW/0PcNIgVl6+Gx7Bh4lcA==",
+  "dgSpecHash": "1BhNZetofS3+r9l/Q/9RUuAleDNUVMBa3KvRVwt6M5V2pAkTiIlTSRhpZ9Tkh+oNgTzmU2HFG7hU7lYs4tPV5Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Mario\\Documents\\Desarrollo\\Pulsar\\Compilador\\Compilador\\Compilador.csproj",
+  "projectFilePath": "C:\\Users\\Mario\\Documents\\Desarrollo\\Pulsar\\Compilador\\CompiladorAU2\\Compilador\\Compilador.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Mario\\.nuget\\packages\\runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Mario\\.nuget\\packages\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-arm64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
