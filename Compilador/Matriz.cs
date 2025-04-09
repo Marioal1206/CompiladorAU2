@@ -90,6 +90,7 @@ namespace Compilador
                                     listaDefiniciones.Add(strFDC + " " + datMatriz.Rows[intEstado - 1][PosicionCAT].ToString());
 									intEstado = 1; //volvemos a inicializar la variable intEstado para la siguente palabra
                                     break;//Salimos del ciclo
+
                                 }
                             }
                         }

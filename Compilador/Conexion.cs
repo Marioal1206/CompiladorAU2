@@ -21,7 +21,7 @@ namespace Compilador
                 sqlConexion = new SqlConnection("Data Source=LAPTOP-AG1ARPMU;Initial Catalog=Automatas2;User ID=Roberto;Password=mario120");
                 sqlConexion.Open();
 
-                MessageBox.Show("Conexion correcta");
+                //MessageBox.Show("Conexion correcta");
             }
             catch (Exception ex)
             {
@@ -35,7 +35,7 @@ namespace Compilador
         {
             try
             {
-                string strQuery = "SELECT * FROM LSCRIPTMXautomatas2";//consulta a la matriz 
+                string strQuery = "SELECT * FROM MtzSCRIPTMXU1";//consulta a la matriz 
                 SqlCommand cmd = new SqlCommand(strQuery, sqlConexion);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);//ejecuta la consulta 
                 DataTable dt = new DataTable();

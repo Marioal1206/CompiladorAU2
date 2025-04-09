@@ -26,6 +26,32 @@ namespace Compilador
             // Modo de solo lectura
             dtgDefiniciones.ReadOnly = true;
 
+            dtgTablaSintactica.Columns.Add("Linea", "Linea");
+            dtgTablaSintactica.Columns.Add("Mensaje", "Mensaje");
+            // No permitir agregar ni eliminar renglones
+            dtgTablaSintactica.AllowUserToAddRows = false;
+            dtgTablaSintactica.AllowUserToDeleteRows = false;
+            // Autoajustar el ancho de las columnas
+            dtgTablaSintactica.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            // Seleccionar un renglón completo al hacer click
+            dtgTablaSintactica.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dtgTablaSintactica.MultiSelect = false;
+            // Modo de solo lectura
+            dtgTablaSintactica.ReadOnly = true;
+
+            dtgTablaSematica.Columns.Add("Linea", "Linea");
+            dtgTablaSematica.Columns.Add("Mensaje", "Mensaje");
+            // No permitir agregar ni eliminar renglones
+            dtgTablaSematica.AllowUserToAddRows = false;
+            dtgTablaSematica.AllowUserToDeleteRows = false;
+            // Autoajustar el ancho de las columnas
+            dtgTablaSintactica.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            // Seleccionar un renglón completo al hacer click
+            dtgTablaSematica.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dtgTablaSematica.MultiSelect = false;
+            // Modo de solo lectura
+            dtgTablaSematica.ReadOnly = true;
+
 
             dtgSimbolos.Columns.Add("NUM", "NUM");
             dtgSimbolos.Columns.Add("NOMBRE", "NOMBRE");
@@ -55,7 +81,7 @@ namespace Compilador
             dtgErrores.MultiSelect = false;
             // Modo de solo lectura
             dtgErrores.ReadOnly = true;
-            txtNumLinea.Text = "00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15";
+            txtNumLinea.Text = "00 01 02 03 04 05 06 07 08 09 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40";
             txtNumLinea.Enabled = false;
 
 
@@ -91,7 +117,7 @@ namespace Compilador
             List<string[]> matrizVAR = new List<string[]>();
             List<Simbolo> listaSimbolosObj = new List<Simbolo>();
 
-            
+
             List<string> listaSimbolos = new List<string>();// cremaos una lista que contenga los tokens pot linea 
 
             string[] arreglolineas = txtCodigo.Lines;// este arreglo almacena el contenido de cada linea de texto
@@ -118,6 +144,7 @@ namespace Compilador
                         {
                             matrizVAR.Add(new string[] { arregloPalabrasLinea[j], listaDefiniciones[j] + intEncrementoID.ToString() });
                             listaDefiniciones[j] = listaDefiniciones[j] + intEncrementoID.ToString();
+
                             intEncrementoID++;
                         }
                         else
@@ -141,18 +168,19 @@ namespace Compilador
 
                         }
 
-                        if (listaSimbolosObj == null) 
+                        if (listaSimbolosObj == null)
                         {
                             Simbolo miSimbolo = new Simbolo();
                             miSimbolo.intID = intEncrementoID;
                             miSimbolo.strNombre = arregloPalabrasLinea[j].ToString();
 
-                            if (!(j + 2 >= arregloPalabrasLinea.Length)) {
+                            if (!(j + 2 >= arregloPalabrasLinea.Length))
+                            {
                                 if (listaDefiniciones[j + 1] == "OPASG")
                                     miSimbolo.strValor = arregloPalabrasLinea[j + 2];
                                 switch (listaDefiniciones[j + 2])
                                 {
-                                    case "CAD": 
+                                    case "CAD":
                                         miSimbolo.strTipoValor = "string";
                                         break;
                                     case "CNUM":
@@ -197,20 +225,20 @@ namespace Compilador
                                     switch (listaDefiniciones[j + 2])
                                     {
                                         case "CAD":
-                                            miSimbolo.strTipoValor = "string";
+                                            miSimbolo.strTipoValor = "cadena";
                                             break;
                                         case "CNUM":
-                                            miSimbolo.strTipoValor = "int";
+                                            miSimbolo.strTipoValor = "entero";
                                             break;
                                         case "CNUMD":
-                                            miSimbolo.strTipoValor = "float";
+                                            miSimbolo.strTipoValor = "decimal";
                                             break;
                                     }
 
 
                                 }
                                 listaSimbolosObj.Add(miSimbolo);
-                                intEncrementoID++;
+                                //intEncrementoID++;
 
                             }
 
@@ -218,7 +246,7 @@ namespace Compilador
 
 
 
-                        if (listaSimbolos == null)//checamos que la liste este vacia
+                        if (listaSimbolos == null)//checamos que la lista este vacia
                         {
                             //agregamos la la palabra que conincida con la pocicion del token de identificador valido a la lista de simbolos 
                             listaSimbolos.Add(arregloPalabrasLinea[j]);
@@ -267,7 +295,7 @@ namespace Compilador
             int Contador = 1;//variable del contador
             foreach (Simbolo miSimbolo in listaSimbolosObj)//recorremos la lista de simbolos para imprimir en la tabla de simbolos 
             {
-                dtgSimbolos.Rows.Add(miSimbolo.intID,miSimbolo.strNombre,miSimbolo.strTipoValor,miSimbolo.strValor);
+                dtgSimbolos.Rows.Add(Contador, miSimbolo.strNombre, miSimbolo.strTipoValor, miSimbolo.strValor);
                 Contador++;
             }
 
@@ -345,6 +373,32 @@ namespace Compilador
                 }
             }
 
+            List<string> listaTokens2 = new List<string>();
+            string strContenidoLinea2 = "";
+
+
+            foreach (DataGridViewRow fila in dtgDefiniciones.Rows)
+            {
+                if (!fila.IsNewRow)
+                {
+                    strContenidoLinea2 = fila.Cells["Definicion"].Value!.ToString();
+                    listaTokens2.Add(strContenidoLinea2);
+
+                }
+            }
+
+            string strRutaArchivo2 = "TokensTipo.txt";
+
+            using (StreamWriter escribirTexto2 = new StreamWriter(strRutaArchivo2))
+            {
+                foreach (string linea in listaTokens2)
+                {
+                    escribirTexto2.WriteLine(linea);
+                }
+            }
+
+
+
 
         }
 
@@ -421,7 +475,24 @@ namespace Compilador
 
         private void btnLeerArchivoTokens_Click(object sender, EventArgs e)
         {
+            //========================[ GRAMATICA ]================================================
+            LecturaArchivoTokensGramatica();
 
+            //========================[ SEMANTICA ]================================================
+            LecturaArchivoTokensSemantica();
+
+
+
+
+
+
+
+
+
+        }
+
+        private void LecturaArchivoTokensGramatica()
+        {
             string inputFilePath = "Tokens.txt"; // Ruta del archivo de entrada
 
             if (!File.Exists(inputFilePath))
@@ -429,58 +500,116 @@ namespace Compilador
                 Console.WriteLine("El archivo no existe: " + inputFilePath);
                 return;
             }
-
+            dtgTablaSintactica.Rows.Clear();
             // Leer el archivo y procesar las líneas
             var lines = File.ReadAllLines(inputFilePath);
             var tokenList = new List<string>();
-
+            int linea = 0;
             foreach (var line in lines)
             {
                 string processedLine = ProcessLine(line);
+                //MessageBox.Show(processedLine);
                 if (!string.IsNullOrWhiteSpace(processedLine))
                 {
                     // Dividir las palabras en la línea procesada y agregarlas a la lista
-                    tokenList.AddRange(processedLine.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+                    tokenList = new List<string>(processedLine.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+
+
+
+
                 }
+
+                Gramatica miGramatica = new Gramatica(tokenList, ConversorTXT_Matriz("Gramatica.txt"));
+                //List<List<string>> mPrueba = ConversorTXT_Matriz();
+                //MessageBox.Show(mPrueba[0][3]);
+                string strMensaje = miGramatica.ManejadorRespuesta();
+                //MessageBox.Show(linea.ToString() + strMensaje);
+                //tokenList = null;
+                dtgTablaSintactica.Rows.Add(linea, strMensaje);
+                linea++;
             }
 
-            // Mostrar la lista de tokens
-            /*Console.WriteLine("Lista de tokens:");
-            foreach (var token in tokenList)
+        }
+
+        private void LecturaArchivoTokensSemantica()
+        {
+            string inputFilePath = "TokensTipo.txt"; // Ruta del archivo de entrada
+
+            if (!File.Exists(inputFilePath))
             {
-                MessageBox.Show(token);
-            }*/
+                Console.WriteLine("El archivo no existe: " + inputFilePath);
+                return;
+            }
 
-
-
-
-            Parser miParse = new Parser();
-
-
-
-            //List<string> listaTokens = new List<string>();
-            //listaTokens.Add("CNUM");
-            //listaTokens.Add("CNUM");
-            //listaTokens.Add("VAR");
-            List<string> listaTokenscorregidos =
-            miParse.ComprobarCadena(tokenList);
-
-            foreach (var token in listaTokenscorregidos)
+            dtgTablaSematica.Rows.Clear();
+            // Leer el archivo y procesar las líneas
+            var lines = File.ReadAllLines(inputFilePath);
+            var tokenList = new List<string>();
+            int linea = 0;
+            foreach (var line in lines)
             {
-                if (listaTokenscorregidos.Count > 2)
+                string processedLine = ProcessLineSemantico(line);
+                //MessageBox.Show(processedLine);
+                if (!string.IsNullOrWhiteSpace(processedLine))
                 {
-                    MessageBox.Show("Condicion No valida");
-                    break;
+                    // Dividir las palabras en la línea procesada y agregarlas a la lista
+                    tokenList = new List<string>(processedLine.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+
+
+
+
                 }
-                else
-                {
-                    if (token == "COND")
+
+                if (tokenList[0] != "S") {
+                    if (tokenList[0].Substring(0, 2) != "VA")
                     {
-                        MessageBox.Show("Condicion Valida");
+                        Gramatica miGramatica = new Gramatica(tokenList, ConversorTXT_Matriz("Semantica.txt"));
+                        //List<List<string>> mPrueba = ConversorTXT_Matriz();
+                        //MessageBox.Show(mPrueba[0][3]);
+                        string strMensaje = miGramatica.ManejadorRespuesta();
+                        //MessageBox.Show(linea.ToString() + strMensaje);
+                        //tokenList = null;
+                        dtgTablaSematica.Rows.Add(linea, strMensaje);
+                        linea++;
+
+
                     }
-                    else { MessageBox.Show(token + " no es una condicion "); }
+                    else {
+                        dtgTablaSematica.Rows.Add(linea, "Sintaxis Correcta");
+                        linea++;
+
+                    }
+
                 }
+                
+                
+                
+               
             }
+
+        }
+
+        private static List<List<string>> ConversorTXT_Matriz(string strNombreArchivo)
+        {
+            string filePath = strNombreArchivo; // Ruta del archivo de texto
+            List<List<string>> listaDeListas = new List<List<string>>();
+
+            // Leer cada línea del archivo
+            foreach (var line in File.ReadLines(filePath))
+            {
+                // Dividir la línea en elementos usando un separador (ejemplo: ',')
+                List<string> elementos = new List<string>(line.Split(" "));
+                listaDeListas.Add(elementos);
+            }
+
+            // Imprimir la lista de listas
+            //foreach (var lista in listaDeListas)
+            //{
+            //Console.WriteLine(string.Join(" | ", lista));
+            //}
+            return listaDeListas;
+
+
         }
 
         private static string ProcessLine(string line)
@@ -495,6 +624,29 @@ namespace Compilador
         }
 
         static List<string[]> ParseTokens(string[] lines)
+        {
+            var tokens = new List<string[]>();
+            foreach (var line in lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    tokens.Add(line.Split(' '));
+                }
+            }
+            return tokens;
+        }
+        private static string ProcessLineSemantico(string line)
+        {
+            // Eliminar el número inicial del renglón (si existe)
+            string noNumberPrefix = Regex.Replace(line, "^\\d+\\s*", "");
+
+            // Eliminar números al final de las palabras VAR (ejemplo: VAR1 -> VAR)
+            // string processedLine = Regex.Replace(noNumberPrefix, "\\bVAR\\d+\\b", "VAR");
+
+            return noNumberPrefix.Trim();
+        }
+
+        static List<string[]> ParseTokensSemantico(string[] lines)
         {
             var tokens = new List<string[]>();
             foreach (var line in lines)
@@ -532,6 +684,16 @@ namespace Compilador
                     escribirTexto.WriteLine(linea);
                 }
             }
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
